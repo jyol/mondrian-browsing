@@ -28,7 +28,13 @@ body {
 .page {
   min-height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
+}
+
+.page-body {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 320px);
+  min-height: 0;
 }
 
 /* Header band */
@@ -246,6 +252,99 @@ kbd {
   border-top-color: rgba(255, 255, 255, 0.25);
 }
 
+/* Leaderboard sidebar */
+.leaderboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  background: var(--mondrian-white);
+  border-left: var(--border);
+  border-bottom: var(--border);
+  min-height: 0;
+}
+
+.leaderboard-header {
+  padding: 14px 16px;
+  background: var(--mondrian-red);
+  color: var(--mondrian-white);
+  border-bottom: 4px solid var(--mondrian-black);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.leaderboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 12px 14px 16px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: auto minmax(52px, auto) 1fr;
+  gap: 6px;
+  align-items: baseline;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.leaderboard-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.leaderboard-item-done .leaderboard-blocks {
+  color: var(--mondrian-blue);
+}
+
+.leaderboard-rank {
+  font-weight: 700;
+  color: var(--mondrian-black);
+}
+
+.leaderboard-blocks {
+  font-weight: 700;
+  color: var(--mondrian-red);
+  white-space: nowrap;
+}
+
+.leaderboard-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.leaderboard-player {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-page {
+  color: var(--mondrian-blue);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-empty {
+  font-size: 13px;
+  color: var(--mondrian-blue);
+  font-style: italic;
+  line-height: 1.4;
+}
+
 .footer {
   padding: 18px 32px;
   background: var(--mondrian-black);
@@ -280,6 +379,16 @@ kbd {
   .hero-tag {
     justify-content: center;
     border-top: var(--border);
+  }
+
+  .page-body {
+    grid-template-columns: 1fr;
+  }
+
+  .leaderboard-sidebar {
+    border-left: none;
+    border-top: var(--border);
+    max-height: 360px;
   }
 
   .composition {
