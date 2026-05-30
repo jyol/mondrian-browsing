@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Mondrian Browsing",
+  "version": "2.0.0",
+  "description": "Paint webpage blocks in Mondrian colors within 60 seconds and climb the global leaderboard.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["<all_urls>", "https://*.supabase.co/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Toggle Mondrian Browsing"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["styles.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

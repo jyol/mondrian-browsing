@@ -1,0 +1,496 @@
+/* ==========================================================================
+   Mondrian Browsing — spectrum from Composition & Boogie Woogie palettes
+   ========================================================================== */
+
+:root {
+  --mondrian-red: #E31B23;
+  --mondrian-blue: #1951A0;
+  --mondrian-yellow: #FAD201;
+  --mondrian-white: #FFFFFF;
+  --mondrian-black: #16161D;
+  --mondrian-canvas: #FFFFFF;
+  --mondrian-canvas-hover: #F0F0F0;
+}
+
+/* Hide all original page content when the game is active */
+html[data-sweeper-active] *,
+html[data-sweeper-active] *::before,
+html[data-sweeper-active] *::after {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-image: none !important;
+  outline-color: transparent !important;
+}
+
+html[data-sweeper-active] * {
+  pointer-events: none !important;
+}
+
+/*
+ * Overlay canvas — one Mondrian block per leaf element (no nested parent boxes).
+ */
+html[data-sweeper-active] #sweeper-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483640;
+  pointer-events: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+html[data-sweeper-active] .sweeper-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  pointer-events: auto !important;
+  cursor: pointer;
+  background-color: var(--game-canvas, var(--mondrian-canvas)) !important;
+  box-shadow: inset 0 0 0 3px var(--game-border, var(--mondrian-black)) !important;
+  border: none;
+  border-radius: 0;
+  transition: background-color 0.2s ease;
+  will-change: transform, width, height;
+}
+
+html[data-sweeper-active] .sweeper-overlay:hover:not(.sweeper-painted) {
+  background-color: var(--game-canvas-hover, var(--mondrian-canvas-hover)) !important;
+}
+
+html[data-sweeper-active] .sweeper-overlay.sweeper-painted {
+  cursor: default;
+}
+
+html[data-sweeper-active] #sweeper-hud,
+html[data-sweeper-active] #sweeper-hud *,
+html[data-sweeper-active] #sweeper-result,
+html[data-sweeper-active] #sweeper-result *,
+html[data-sweeper-active] #sweeper-start,
+html[data-sweeper-active] #sweeper-start * {
+  text-shadow: none !important;
+  pointer-events: auto !important;
+}
+
+/* HUD — compact, draggable panel (default top-right) */
+html[data-sweeper-active] #sweeper-hud {
+  --hud-scale: 1.1;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  left: auto;
+  bottom: auto;
+  z-index: 2147483646;
+  width: calc(220px * var(--hud-scale));
+  max-height: min(calc(42vh * var(--hud-scale)), calc(280px * var(--hud-scale)));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: var(--mondrian-white) !important;
+  border: 3px solid var(--mondrian-black) !important;
+  border-radius: 0;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+html[data-sweeper-active] #sweeper-hud.sweeper-hud-dragging {
+  cursor: grabbing;
+  opacity: 0.96;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-drag-handle {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--hud-scale));
+  margin: 0;
+  padding: calc(6px * var(--hud-scale)) calc(8px * var(--hud-scale));
+  background: var(--mondrian-red) !important;
+  border-bottom: 3px solid var(--mondrian-black);
+  cursor: grab;
+  touch-action: none;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-drag-grip {
+  color: var(--mondrian-yellow) !important;
+  -webkit-text-fill-color: var(--mondrian-yellow) !important;
+  font-size: calc(14px * var(--hud-scale));
+  line-height: 1;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-title-text {
+  font-size: calc(11px * var(--hud-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mondrian-white) !important;
+  -webkit-text-fill-color: var(--mondrian-white) !important;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 2px solid var(--mondrian-black);
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-stat {
+  padding: calc(5px * var(--hud-scale)) calc(6px * var(--hud-scale));
+  border-right: 2px solid var(--mondrian-black);
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-stat:last-child {
+  border-right: none;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-label {
+  display: block;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  font-weight: 700;
+  font-size: calc(9px * var(--hud-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-value,
+html[data-sweeper-active] #sweeper-hud #sweeper-hud-time,
+html[data-sweeper-active] #sweeper-hud #sweeper-hud-score {
+  color: var(--mondrian-blue) !important;
+  -webkit-text-fill-color: var(--mondrian-blue) !important;
+  font-weight: 700;
+  font-size: calc(14px * var(--hud-scale));
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-status {
+  margin: 0;
+  padding: calc(5px * var(--hud-scale)) calc(6px * var(--hud-scale));
+  border-bottom: 2px solid var(--mondrian-black);
+  font-size: calc(9px * var(--hud-scale));
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  background: var(--mondrian-yellow) !important;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  line-height: 1.3;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-status.sweeper-status-playing {
+  background: var(--mondrian-white) !important;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-status.sweeper-status-hurry {
+  background: var(--mondrian-yellow) !important;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  animation: sweeper-status-blink 0.8s step-end infinite;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-status.sweeper-status-win {
+  background: var(--mondrian-blue) !important;
+  color: var(--mondrian-white) !important;
+  -webkit-text-fill-color: var(--mondrian-white) !important;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-status.sweeper-status-lost {
+  background: var(--mondrian-red) !important;
+  color: var(--mondrian-white) !important;
+  -webkit-text-fill-color: var(--mondrian-white) !important;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-leaderboard-heading {
+  margin: 0;
+  padding: calc(4px * var(--hud-scale)) calc(6px * var(--hud-scale));
+  border-bottom: 2px solid var(--mondrian-black);
+  background: var(--mondrian-white) !important;
+  color: var(--mondrian-blue) !important;
+  -webkit-text-fill-color: var(--mondrian-blue) !important;
+  font-size: calc(10px * var(--hud-scale));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-hud-leaderboard {
+  margin: 0;
+  padding: calc(4px * var(--hud-scale)) calc(6px * var(--hud-scale)) calc(6px * var(--hud-scale));
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--mondrian-white) !important;
+}
+
+@keyframes sweeper-status-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Leaderboard */
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-item {
+  display: grid;
+  grid-template-columns: auto minmax(calc(52px * var(--hud-scale)), auto) 1fr;
+  gap: calc(4px * var(--hud-scale));
+  align-items: baseline;
+  margin-bottom: calc(4px * var(--hud-scale));
+  font-size: calc(10px * var(--hud-scale));
+  line-height: 1.25;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-rank {
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  font-weight: 700;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-blocks {
+  color: var(--mondrian-red) !important;
+  -webkit-text-fill-color: var(--mondrian-red) !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(6px * var(--hud-scale));
+  min-width: 0;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-player {
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 0 1 auto;
+  max-width: 48%;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-page {
+  color: var(--mondrian-blue) !important;
+  -webkit-text-fill-color: var(--mondrian-blue) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  text-align: right;
+}
+
+html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-empty {
+  font-size: calc(10px * var(--hud-scale));
+  color: var(--mondrian-blue) !important;
+  -webkit-text-fill-color: var(--mondrian-blue) !important;
+  font-style: italic;
+}
+
+/* Start popup — shown when the game begins */
+#sweeper-start {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+html[data-sweeper-active] #sweeper-start.sweeper-start-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+html[data-sweeper-active] #sweeper-start .sweeper-start-card {
+  max-width: min(520px, 90vw);
+  padding: 0;
+  text-align: center;
+  background: var(--mondrian-white) !important;
+  border: 6px solid var(--mondrian-black);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  cursor: pointer;
+  animation: sweeper-result-pop 0.45s ease-out;
+}
+
+html[data-sweeper-active] #sweeper-start .sweeper-start-title {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: clamp(28px, 6vw, 52px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 32px 40px;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  background: var(--mondrian-yellow) !important;
+}
+
+/* Result popup — Mondrian composition card */
+#sweeper-result {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+html[data-sweeper-active] #sweeper-result.sweeper-result-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-card {
+  max-width: min(640px, 92vw);
+  padding: 0;
+  text-align: center;
+  background: var(--mondrian-white) !important;
+  border: 6px solid var(--mondrian-black);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  animation: sweeper-result-pop 0.45s ease-out;
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-title {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: clamp(26px, 5.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 28px 32px 20px;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+}
+
+html[data-sweeper-active] #sweeper-result.sweeper-result-win .sweeper-result-title {
+  background: var(--mondrian-yellow) !important;
+  border-bottom: 4px solid var(--mondrian-black);
+}
+
+html[data-sweeper-active] #sweeper-result.sweeper-result-lose .sweeper-result-title {
+  background: var(--mondrian-red) !important;
+  color: var(--mondrian-white) !important;
+  -webkit-text-fill-color: var(--mondrian-white) !important;
+  border-bottom: 4px solid var(--mondrian-black);
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-subtitle {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  padding: 20px 32px 12px;
+  color: var(--mondrian-blue) !important;
+  -webkit-text-fill-color: var(--mondrian-blue) !important;
+  background: var(--mondrian-white) !important;
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-rank {
+  margin: 0;
+  padding: 0 32px 16px;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: clamp(15px, 2.8vw, 20px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--mondrian-black) !important;
+  -webkit-text-fill-color: var(--mondrian-black) !important;
+  background: var(--mondrian-white) !important;
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-download {
+  display: block;
+  width: calc(100% - 48px);
+  margin: 0 24px 24px;
+  padding: 12px 16px;
+  border: 3px solid var(--mondrian-black);
+  background: var(--mondrian-blue) !important;
+  color: var(--mondrian-white) !important;
+  -webkit-text-fill-color: var(--mondrian-white) !important;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: clamp(15px, 2.8vw, 18px);
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html[data-sweeper-active] #sweeper-result .sweeper-result-download:hover {
+  background: var(--mondrian-red) !important;
+}
+
+html[data-sweeper-active][data-sweeper-gameover] #sweeper-paint-watermark {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 2147483645;
+  pointer-events: none;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.82) !important;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0.82) !important;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.85);
+}
+
+@keyframes sweeper-result-pop {
+  0% {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+html[data-sweeper-active][data-sweeper-gameover][data-sweeper-win] .sweeper-overlay.sweeper-painted {
+  box-shadow: inset 0 0 0 3px var(--mondrian-black) !important;
+}
+
+html[data-sweeper-active][data-sweeper-gameover]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 2147483639;
+  pointer-events: none;
+}
