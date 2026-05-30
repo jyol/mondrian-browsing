@@ -1,6 +1,6 @@
 # Mondrian Browsing / 蒙德里安在上网
 
-**🎮 立即下载 & 开始玩 → [下载页面 (index.html)](https://jyol.github.io/mondrian-browsing/index.html)**
+**🎮 立即下载 & 开始玩 → [jyol.github.io/mondrian-browsing](https://jyol.github.io/mondrian-browsing/)**
 
 **把任意网页变成一幅蒙德里安画作。**
 
@@ -10,17 +10,15 @@ Mondrian Browsing 是一款 Chrome 浏览器插件游戏：打开任意网页，
 
 ## 怎么开始玩
 
-**最快方式：** 打开 [下载页面](https://jyol.github.io/mondrian-browsing/index.html)，点击「下载插件」，按页面说明安装即可。
+**最快方式：** 打开 [下载页面](https://jyol.github.io/mondrian-browsing/)，点击「下载插件」，按页面说明安装即可。
 
 **或者从 GitHub 安装：**
 
-1. 下载并解压本仓库（或 [`docs/mondrian-browsing.zip`](docs/mondrian-browsing.zip)）
+1. 下载并解压本仓库（或 [`mondrian-browsing.zip`](mondrian-browsing.zip)）
 2. 打开 Chrome，访问 `chrome://extensions`
 3. 打开右上角 **开发者模式** → 点击 **加载已解压的扩展程序** → 选择 `mondrian-browsing` 文件夹
 4. 打开任意网页（如 Wikipedia、新闻、博客），点击工具栏上的 **Mondrian Browsing** 图标
 5. 在 60 秒内尽可能多地点方块上色 🎨
-
-> 网站文件在 [`docs/index.html`](docs/index.html)。若链接暂时打不开，请到仓库 **Settings → Pages**，Source 选 **GitHub Actions**，等部署完成后再访问。
 
 ---
 
