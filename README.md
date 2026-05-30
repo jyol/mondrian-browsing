@@ -1,5 +1,9 @@
 # Mondrian Browsing / 蒙德里安在上网
 
+**🎮 立即下载 & 开始玩 → [jyol.github.io/mondrian-browsing](https://jyol.github.io/mondrian-browsing/)**
+
+（这是 `docs/index.html` 的在线地址，GitHub Pages 会自动发布）
+
 **把任意网页变成一幅蒙德里安画作。**
 
 Mondrian Browsing 是一款 Chrome 浏览器插件游戏：打开任意网页，在 **60 秒** 内点击页面上的方块，给它们涂上蒙德里安风格的红、蓝、黄、白、黑。画完可以下载 PNG，还能冲击 **全球排行榜**。
