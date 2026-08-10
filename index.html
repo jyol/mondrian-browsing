@@ -1,104 +1,103 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mondrian Browsing — 给网页上色</title>
-  <meta name="description" content="60 秒 Chrome 扩展游戏。把任意网页变成蒙德里安画作，冲击全球排行榜。">
+  <title>Mondrian Browsing — Paint the Web</title>
+  <meta name="description" content="A 60-second Chrome extension game. Turn any webpage into a Mondrian painting and climb the global leaderboard.">
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
   <div class="page">
     <header class="hero">
-      <h1 class="hero-title">蒙德里安在上网/Mondrian Browsing</h1>
+      <h1 class="hero-title">Mondrian Browsing</h1>
+      <p class="hero-tag">60-second webpage painting</p>
     </header>
 
     <div class="page-body">
       <main class="composition">
         <section class="download-block" id="download">
-          <h2>将任意网页变成一幅画</h2>
+          <h2>Turn any webpage into a painting</h2>
+          <p>Paint blocks in Mondrian colors in 60 seconds, download your art, and climb the global leaderboard.</p>
           <a class="download-btn" id="download-btn" href="mondrian-browsing.zip" download="mondrian-browsing.zip">
-            下载插件开始玩游戏
+            Download extension
           </a>
-          <h3>将任意网页变成一幅画,尝试在60秒内将网页涂成蒙德里安风格的画作，并冲击全球排行榜吧：D</h3>
         </section>
 
         <section class="panel panel-install" id="install">
-          <h3>安装步骤（约30秒）</h3>
+          <h3>Install</h3>
           <ol class="steps">
             <li>
               <span class="step-num">1</span>
-              <span>解压 <strong>mondrian-browsing.zip</strong>，你会得到一个名为 <strong>mondrian-browsing</strong> 的文件夹。</span>
+              <span>Unzip <strong>mondrian-browsing.zip</strong>.</span>
             </li>
             <li>
               <span class="step-num">2</span>
-              <span>打开 Chrome，在地址栏输入 <code>chrome://extensions</code> 并回车。</span>
+              <span>Open <code>chrome://extensions</code>.</span>
             </li>
             <li>
               <span class="step-num">3</span>
-              <span>打开右上角的 <strong>开发者模式</strong>，点击 <strong>加载已解压的扩展程序</strong>，选择 <strong>mondrian-browsing</strong> 文件夹。</span>
+              <span>Enable <strong>Developer mode</strong> → <strong>Load unpacked</strong> → select the folder.</span>
             </li>
             <li>
               <span class="step-num">4</span>
-              <span>点击工具栏的 <strong>插件图标</strong>，找到 Mondrian Browsing，点击 <strong>图钉</strong> 固定到工具栏。</span>
+              <span>Pin <strong>Mondrian Browsing</strong> to the toolbar.</span>
             </li>
           </ol>
         </section>
 
         <section class="panel panel-play" id="play">
-          <h3>怎么玩</h3>
+          <h3>How to play</h3>
           <ol class="steps">
             <li>
               <span class="step-num">1</span>
-              <span>打开任意普通网页（例如 Wikipedia、新闻网站、博客）。</span>
+              <span>Open any normal webpage.</span>
             </li>
             <li>
               <span class="step-num">2</span>
-              <span>点击工具栏上的 <strong>Mondrian Browsing</strong> 插件图标，开始游戏。</span>
+              <span>Click the toolbar icon to start.</span>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <span>Paint as many blocks as you can in <strong>60 seconds</strong>.</span>
             </li>
             <li>
               <span class="step-num">4</span>
-              <span>在 <strong>60 秒</strong> 内尽可能多地 <strong>点击页面上的方块</strong> 进行上色。</span>
-            </li>
-            <li>
-              <span class="step-num">5</span>
-              <span>第一次完成游戏时，输入你的 <strong>昵称</strong>，即可加入 <strong>全球排行榜</strong>。</span>
+              <span>Enter a nickname for the leaderboard. Download your PNG when done.</span>
             </li>
           </ol>
-          <p class="tips">
-            游戏结束后可以下载 PNG 画作。
-          </p>
         </section>
       </main>
 
       <aside class="leaderboard-sidebar" id="leaderboard">
-        <div class="leaderboard-header">全球排行榜</div>
+        <div class="leaderboard-header">Global leaderboard</div>
         <ol class="leaderboard-list" id="leaderboard-list">
-          <li class="leaderboard-empty">加载中…</li>
+          <li class="leaderboard-empty">Loading…</li>
         </ol>
       </aside>
     </div>
 
     <div class="accent-strip" aria-hidden="true"></div>
     <footer class="footer">
-      作者 <a href="mailto:joannalyu19@gmail.com">joannalyu19@gmail.com</a> ·
-      微信：annual-report ·
-      <a href="https://instagram.com/jyolyyyu" target="_blank" rel="noopener">@jyolyyyu</a>
-      · <a href="privacy.html">Privacy / 隐私政策</a>
+      <a href="mailto:joannalyu19@gmail.com">joannalyu19@gmail.com</a>
+      · WeChat: annual-report
+      · <a href="https://instagram.com/jyolyyyu" target="_blank" rel="noopener">@jyolyyyu</a>
+      · <a href="privacy.html">Privacy</a>
     </footer>
   </div>
 
   <div class="download-toast" id="download-toast" role="status" aria-live="polite">
-    下载已开始 — 请解压文件夹，然后按照下方安装步骤操作 ↓
+    Download started — unzip, then follow Install →
   </div>
 
   <script src="leaderboard.js"></script>
   <script>
     document.getElementById('download-btn').addEventListener('click', function () {
-      document.getElementById('download-toast').classList.add('visible');
+      var toast = document.getElementById('download-toast');
+      toast.classList.add('visible');
       setTimeout(function () {
-        document.getElementById('install').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
+        toast.classList.remove('visible');
+      }, 3200);
     });
   </script>
 </body>

@@ -70,14 +70,14 @@ async function fetchTopScores(limit) {
 
 function renderLeaderboard(listEl, list) {
   if (!list.length) {
-    listEl.innerHTML = '<li class="leaderboard-empty">暂无分数 — 来当第一个吧！</li>';
+    listEl.innerHTML = '<li class="leaderboard-empty">No scores yet — be the first!</li>';
     return;
   }
 
   listEl.innerHTML = list.map(function (entry, index) {
     const rank = index + 1;
     const player = escapeHtml(entry.player_name || 'Anonymous');
-    const page = escapeHtml(entry.page || '未知页面');
+    const page = escapeHtml(entry.page || 'Unknown page');
     const blocks = escapeHtml(formatBlocks(entry));
     const done = entry.completed ? ' leaderboard-item-done' : '';
 
@@ -100,14 +100,14 @@ function loadLeaderboard() {
     return;
   }
 
-  listEl.innerHTML = '<li class="leaderboard-empty">加载中…</li>';
+  listEl.innerHTML = '<li class="leaderboard-empty">Loading…</li>';
 
   fetchTopScores(LEADERBOARD_LIMIT)
     .then(function (list) {
       renderLeaderboard(listEl, list);
     })
     .catch(function () {
-      listEl.innerHTML = '<li class="leaderboard-empty">排行榜暂时无法加载</li>';
+      listEl.innerHTML = '<li class="leaderboard-empty">Leaderboard unavailable</li>';
     });
 }
 
