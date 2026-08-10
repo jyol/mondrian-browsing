@@ -9,7 +9,7 @@ const SUPABASE_CONFIG = {
 };
 
 const PLAYER_NAME_STORAGE_KEY = 'mondrianPlayerName';
-const LEADERBOARD_LIMIT = 10;
+const LEADERBOARD_LIMIT = 30;
 
 function isSupabaseConfigured() {
   return (

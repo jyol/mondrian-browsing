@@ -2,7 +2,7 @@
 
 const SUPABASE_URL = 'https://slixswedyfgixlgwmlgi.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_YuQ-bI0v97xlZpAy7jnpdQ_9gMl53pt';
-const LEADERBOARD_LIMIT = 10;
+const LEADERBOARD_LIMIT = 30;
 
 function escapeHtml(text) {
   return String(text)

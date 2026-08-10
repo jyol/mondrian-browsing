@@ -96,7 +96,19 @@ async function handleLeaderboardSave(entry, sendResponse) {
 }
 
 chrome.action.onClicked.addListener(async (tab) => {
-  if (!tab || !tab.id || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
+  if (!tab || !tab.id || !tab.url) {
+    return;
+  }
+
+  const url = tab.url;
+  if (
+    url.startsWith('chrome://') ||
+    url.startsWith('chrome-extension://') ||
+    url.startsWith('edge://') ||
+    url.startsWith('about:') ||
+    url.startsWith('https://chrome.google.com/webstore') ||
+    url.startsWith('https://chromewebstore.google.com/')
+  ) {
     return;
   }
 

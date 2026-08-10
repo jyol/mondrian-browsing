@@ -25,7 +25,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site
-          cp index.html site.css mondrian-browsing.zip leaderboard.js .nojekyll _site/
+          cp index.html privacy.html site.css mondrian-browsing.zip leaderboard.js .nojekyll _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

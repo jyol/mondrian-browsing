@@ -7,6 +7,11 @@
  */
 
 (function MondrianBrowsing() {
+  if (window.__mondrianBrowsingLoaded) {
+    return;
+  }
+  window.__mondrianBrowsingLoaded = true;
+
   const INTERACTIVE_SELECTOR =
     'a, button, input, select, textarea, label, summary, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])';
   const NON_RENDERED_TAGS = new Set([
@@ -17,7 +22,7 @@
   const START_TIME = 60;
   const WARNING_TIME_THRESHOLD = 20;
   const HUD_POSITION_KEY = 'sweeperHudPosition';
-  const LEADERBOARD_LIMIT = 10;
+  const LEADERBOARD_LIMIT = 30;
 
   const UNPAINTED_CANVAS = '#FFFFFF';
   const UNPAINTED_HOVER = '#F0F0F0';
@@ -103,6 +108,7 @@
   let scoreValueEl = null;
   let statusEl = null;
   let leaderboardListEl = null;
+  let leaderboardPanelEl = null;
   let resultOverlayEl = null;
   let startPopupEl = null;
   let startPopupTimeoutId = null;
@@ -861,7 +867,7 @@
       '<div class="sweeper-hud-status sweeper-status-playing" id="sweeper-hud-status">' +
       STATUS.playing +
       '</div>' +
-      '<div class="sweeper-hud-leaderboard-heading">Global scores</div>' +
+      '<div class="sweeper-hud-leaderboard-heading">Global leaderboard</div>' +
       '<div class="sweeper-hud-leaderboard" id="sweeper-hud-leaderboard-panel">' +
       '<ol class="sweeper-leaderboard-list" id="sweeper-leaderboard-list"></ol>' +
       '</div>';
@@ -872,6 +878,7 @@
     scoreValueEl = hudEl.querySelector('#sweeper-hud-score');
     statusEl = hudEl.querySelector('#sweeper-hud-status');
     leaderboardListEl = hudEl.querySelector('#sweeper-leaderboard-list');
+    leaderboardPanelEl = hudEl.querySelector('#sweeper-hud-leaderboard-panel');
     hudDragHandle = hudEl.querySelector('#sweeper-hud-drag-handle');
 
     setupHudInteractions();
@@ -881,6 +888,9 @@
   function setupHudInteractions() {
     if (hudDragHandle) {
       hudDragHandle.addEventListener('pointerdown', onHudDragStart, true);
+    }
+    if (leaderboardPanelEl) {
+      leaderboardPanelEl.addEventListener('wheel', onLeaderboardWheel, { passive: false });
     }
   }
 
@@ -892,9 +902,19 @@
     if (hudDragHandle) {
       hudDragHandle.removeEventListener('pointerdown', onHudDragStart, true);
     }
+    if (leaderboardPanelEl) {
+      leaderboardPanelEl.removeEventListener('wheel', onLeaderboardWheel);
+    }
 
     hudDragHandle = null;
     hudDrag.active = false;
+  }
+
+  function onLeaderboardWheel(event) {
+    if (!leaderboardPanelEl) {
+      return;
+    }
+    event.stopPropagation();
   }
 
   function onHudDragStart(event) {
@@ -1017,6 +1037,7 @@
     scoreValueEl = null;
     statusEl = null;
     leaderboardListEl = null;
+    leaderboardPanelEl = null;
   }
 
   function getLiveScoreDisplay() {

@@ -70,10 +70,10 @@ html[data-sweeper-active] .sweeper-overlay.sweeper-painted {
 
 html[data-sweeper-active] #sweeper-hud,
 html[data-sweeper-active] #sweeper-hud *,
-html[data-sweeper-active] #sweeper-result,
-html[data-sweeper-active] #sweeper-result *,
-html[data-sweeper-active] #sweeper-start,
-html[data-sweeper-active] #sweeper-start * {
+html[data-sweeper-active] #sweeper-result .sweeper-result-card,
+html[data-sweeper-active] #sweeper-result .sweeper-result-card *,
+html[data-sweeper-active] #sweeper-start .sweeper-start-card,
+html[data-sweeper-active] #sweeper-start .sweeper-start-card * {
   text-shadow: none !important;
   pointer-events: auto !important;
 }
@@ -86,9 +86,9 @@ html[data-sweeper-active] #sweeper-hud {
   right: 16px;
   left: auto;
   bottom: auto;
-  z-index: 2147483646;
-  width: calc(220px * var(--hud-scale));
-  max-height: min(calc(42vh * var(--hud-scale)), calc(280px * var(--hud-scale)));
+  z-index: 2147483647;
+  width: calc(260px * var(--hud-scale));
+  max-height: min(calc(52vh * var(--hud-scale)), calc(360px * var(--hud-scale)));
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -118,6 +118,7 @@ html[data-sweeper-active] #sweeper-hud .sweeper-hud-drag-handle {
   border-bottom: 3px solid var(--mondrian-black);
   cursor: grab;
   touch-action: none;
+  flex-shrink: 0;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-hud-drag-grip {
@@ -141,6 +142,7 @@ html[data-sweeper-active] #sweeper-hud .sweeper-hud-stats {
   grid-template-columns: 1fr 1fr;
   gap: 0;
   border-bottom: 2px solid var(--mondrian-black);
+  flex-shrink: 0;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-hud-stat {
@@ -187,6 +189,7 @@ html[data-sweeper-active] #sweeper-hud .sweeper-hud-status {
   color: var(--mondrian-black) !important;
   -webkit-text-fill-color: var(--mondrian-black) !important;
   line-height: 1.3;
+  flex-shrink: 0;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-hud-status.sweeper-status-playing {
@@ -225,13 +228,17 @@ html[data-sweeper-active] #sweeper-hud .sweeper-hud-leaderboard-heading {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-hud-leaderboard {
   margin: 0;
   padding: calc(4px * var(--hud-scale)) calc(6px * var(--hud-scale)) calc(6px * var(--hud-scale));
+  overflow-x: hidden;
   overflow-y: auto;
-  flex: 1 1 auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1 0;
   min-height: 0;
   background: var(--mondrian-white) !important;
 }
@@ -243,25 +250,31 @@ html[data-sweeper-active] #sweeper-hud .sweeper-hud-leaderboard {
 
 /* Leaderboard */
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-inline-start: 0 !important;
+  padding-left: 0 !important;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-item {
   display: grid;
-  grid-template-columns: auto minmax(calc(52px * var(--hud-scale)), auto) 1fr;
-  gap: calc(4px * var(--hud-scale));
-  align-items: baseline;
-  margin-bottom: calc(4px * var(--hud-scale));
+  grid-template-columns: auto auto minmax(0, 1fr);
+  column-gap: calc(6px * var(--hud-scale));
+  align-items: start;
+  margin: 0 0 calc(6px * var(--hud-scale)) !important;
+  padding: 0 !important;
+  padding-inline-start: 0 !important;
+  list-style: none !important;
   font-size: calc(10px * var(--hud-scale));
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-rank {
   color: var(--mondrian-black) !important;
   -webkit-text-fill-color: var(--mondrian-black) !important;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-blocks {
@@ -273,21 +286,20 @@ html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-blocks {
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-meta {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: calc(6px * var(--hud-scale));
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1px;
   min-width: 0;
+  overflow: hidden;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-player {
   color: var(--mondrian-black) !important;
   -webkit-text-fill-color: var(--mondrian-black) !important;
   font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex: 0 1 auto;
-  max-width: 48%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-page {
@@ -296,8 +308,8 @@ html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  flex: 1 1 auto;
-  text-align: right;
+  max-width: 100%;
+  font-size: calc(9px * var(--hud-scale));
 }
 
 html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-empty {
@@ -316,7 +328,7 @@ html[data-sweeper-active] #sweeper-hud .sweeper-leaderboard-empty {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  pointer-events: none;
+  pointer-events: none !important;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s ease, visibility 0.35s ease;
@@ -356,12 +368,12 @@ html[data-sweeper-active] #sweeper-start .sweeper-start-title {
 #sweeper-result {
   position: fixed;
   inset: 0;
-  z-index: 2147483647;
+  z-index: 2147483645;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  pointer-events: none;
+  pointer-events: none !important;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.35s ease, visibility 0.35s ease;

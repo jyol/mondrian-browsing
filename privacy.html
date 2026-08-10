@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Mondrian Browsing</title>
+  <meta name="description" content="Privacy policy for the Mondrian Browsing Chrome extension.">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    .legal {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      color: var(--mondrian-black);
+      line-height: 1.55;
+    }
+    .legal h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.15;
+    }
+    .legal .updated {
+      margin: 0 0 28px;
+      color: var(--mondrian-blue);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .legal h2 {
+      margin: 28px 0 10px;
+      font-size: 20px;
+    }
+    .legal p, .legal li {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+    .legal ul {
+      margin: 0 0 12px;
+      padding-left: 1.2em;
+    }
+    .legal a {
+      color: var(--mondrian-blue);
+      font-weight: 700;
+    }
+    .legal-nav {
+      padding: 16px 24px;
+      border-bottom: var(--border);
+      background: var(--mondrian-yellow);
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      font-weight: 700;
+    }
+    .legal-nav a {
+      color: var(--mondrian-black);
+      text-decoration: none;
+    }
+    .lang-block + .lang-block {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 4px solid var(--mondrian-black);
+    }
+  </style>
+</head>
+<body>
+  <nav class="legal-nav">
+    <a href="index.html">← Mondrian Browsing</a>
+  </nav>
+
+  <main class="legal">
+    <section class="lang-block" lang="en">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: August 10, 2026</p>
+
+      <p>
+        Mondrian Browsing (“the Extension”) is a Chrome extension game that lets you paint blocks on a webpage and optionally submit a score to a global leaderboard.
+        This policy explains what information is collected and how it is used.
+      </p>
+
+      <h2>Information we collect</h2>
+      <ul>
+        <li><strong>Display name</strong> — the nickname you enter the first time you submit a score. It is stored in Chrome’s local extension storage on your device and sent with leaderboard entries.</li>
+        <li><strong>Game score data</strong> — painted block count, total blocks, whether you finished, and a short page label (usually the page title or hostname of the site you played on).</li>
+        <li><strong>Submission time</strong> — when the score was recorded on our leaderboard database.</li>
+      </ul>
+      <p>
+        The Extension does <strong>not</strong> collect email addresses, browsing history beyond the single page label attached to a score, payment information, or precise location.
+      </p>
+
+      <h2>How the data is used</h2>
+      <ul>
+        <li>To show your name and score on the in-game and website global leaderboard.</li>
+        <li>To remember your display name so you do not have to re-enter it every game.</li>
+      </ul>
+      <p>We do not sell personal data or use it for advertising.</p>
+
+      <h2>Where data is stored</h2>
+      <ul>
+        <li><strong>On your device:</strong> display name and HUD position preferences via Chrome <code>storage</code>.</li>
+        <li><strong>On our server:</strong> leaderboard entries are stored in a Supabase project (cloud database). Scores are readable by anyone who can load the public leaderboard.</li>
+      </ul>
+
+      <h2>Permissions</h2>
+      <ul>
+        <li><strong>activeTab / scripting</strong> — used only when you click the Extension icon, to run the game on the current tab.</li>
+        <li><strong>storage</strong> — used to save your display name and HUD preferences locally.</li>
+        <li><strong>Access to Supabase</strong> — used to load and save leaderboard scores.</li>
+      </ul>
+      <p>
+        The Extension does not run on every website in the background. Game code is injected only after you click the toolbar icon.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        The Extension is a casual game and is not directed at children under 13. Please do not submit personal information belonging to a child.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy:
+        <a href="mailto:joannalyu19@gmail.com">joannalyu19@gmail.com</a>
+      </p>
+    </section>
+
+    <section class="lang-block" lang="zh-CN">
+      <h1>隐私政策</h1>
+      <p class="updated">最近更新：2026年8月10日</p>
+
+      <p>
+        Mondrian Browsing（「本扩展」）是一款 Chrome 浏览器插件游戏：你可以在网页方块上涂色，并选择将成绩提交到全球排行榜。
+        本政策说明我们收集哪些信息以及如何使用。
+      </p>
+
+      <h2>我们收集的信息</h2>
+      <ul>
+        <li><strong>显示昵称</strong> — 你第一次提交分数时输入的名字。它会保存在本机 Chrome 扩展存储中，并随排行榜成绩一并上传。</li>
+        <li><strong>游戏成绩数据</strong> — 已涂色方块数、总方块数、是否完成，以及简短页面标签（通常是你游玩页面的标题或域名）。</li>
+        <li><strong>提交时间</strong> — 成绩写入排行榜数据库的时间。</li>
+      </ul>
+      <p>
+        本扩展<strong>不会</strong>收集电子邮件、完整浏览历史、支付信息或精确位置。
+      </p>
+
+      <h2>信息用途</h2>
+      <ul>
+        <li>在游戏内与网站全球排行榜上展示你的昵称与成绩。</li>
+        <li>记住你的昵称，避免每局重新输入。</li>
+      </ul>
+      <p>我们不会出售个人数据，也不会将其用于广告。</p>
+
+      <h2>存储位置</h2>
+      <ul>
+        <li><strong>本机：</strong>昵称与 HUD 位置偏好（Chrome <code>storage</code>）。</li>
+        <li><strong>服务器：</strong>排行榜成绩保存在 Supabase 云数据库中。公开排行榜上的成绩可被任何人查看。</li>
+      </ul>
+
+      <h2>权限说明</h2>
+      <ul>
+        <li><strong>activeTab / scripting</strong> — 仅在你点击扩展图标时，用于在当前标签页运行游戏。</li>
+        <li><strong>storage</strong> — 用于在本地保存昵称与 HUD 偏好。</li>
+        <li><strong>访问 Supabase</strong> — 用于读取与提交排行榜成绩。</li>
+      </ul>
+      <p>本扩展不会在后台对所有网站持续运行；仅在你点击工具栏图标后注入游戏代码。</p>
+
+      <h2>联系方式</h2>
+      <p>
+        如对本政策有疑问，请联系：
+        <a href="mailto:joannalyu19@gmail.com">joannalyu19@gmail.com</a>
+      </p>
+    </section>
+  </main>
+</body>
+</html>

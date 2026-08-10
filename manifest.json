@@ -3,27 +3,23 @@
   "name": "Mondrian Browsing",
   "version": "2.0.0",
   "description": "Paint webpage blocks in Mondrian colors within 60 seconds and climb the global leaderboard.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": ["activeTab", "scripting", "storage"],
-  "host_permissions": ["<all_urls>", "https://*.supabase.co/*"],
+  "host_permissions": ["https://*.supabase.co/*"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Toggle Mondrian Browsing"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"],
-      "run_at": "document_idle",
-      "all_frames": false
+    "default_title": "Toggle Mondrian Browsing",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
     }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["styles.css"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }
